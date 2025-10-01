@@ -118,6 +118,7 @@ hexo.extend.generator.register('post', function(locals) {
 
   return posts.map(route => {
     let post = route.data;
+    let is_private = ( post.categories.filter((category) => category.name === 'private').length !== 0 );
     
     langs.forEach(lang => {
       // if post language is not default and not equal to the current language, skip
@@ -130,7 +131,8 @@ hexo.extend.generator.register('post', function(locals) {
       // find the previous and next post in the current language
       if (post.next[lang]) {
         let post_next = post.next[lang];
-        while (post_next && !isDefaultLanguage(post_next.lang) && (lang !== post_next.lang)) {
+        while (post_next && ((!isDefaultLanguage(post_next.lang) && (lang !== post_next.lang))
+          || is_private !== (post_next.categories.filter((category) => category.name === 'private').length !== 0) )) {
           post_next = post_next.next[lang];
         }
         post.next[lang] = post_next;
@@ -141,8 +143,9 @@ hexo.extend.generator.register('post', function(locals) {
       }
       if (post.prev[lang]) {
         let post_prev = post.prev[lang];
-        while (post_prev && !isDefaultLanguage(post_prev.lang) && lang !== post_prev.lang) {
-          post_prev = post_prev.prev[lang];
+        while (post_prev && ((!isDefaultLanguage(post_prev.lang) && (lang !== post_prev.lang))
+          || is_private !== (post_prev.categories.filter((category) => category.name === 'private').length !== 0) )) {
+            post_prev = post_prev.prev[lang];
         }
         post.prev[lang] = post_prev;
         if (post_prev) {

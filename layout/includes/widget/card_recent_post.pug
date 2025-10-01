@@ -6,7 +6,7 @@ if theme.aside.card_recent_post.enable
         span= _p(langPrefix+'aside.card_recent_post')
       .aside-list
         - let posts = site.posts.filter(function(post){
-          - return is_default_language(post.lang) || lang === post.lang
+          - return (is_default_language(post.lang) || lang === post.lang) && (post.categories.filter((category) => category.name === 'private').length === 0)
         - })
         - let postLimit = theme.aside.card_recent_post.limit === 0 ? site.posts.length : theme.aside.card_recent_post.limit || 5
         - let sort = theme.aside.card_recent_post.sort === 'updated' ? 'updated' : 'date'
