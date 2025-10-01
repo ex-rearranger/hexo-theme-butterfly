@@ -35,6 +35,7 @@ function listCategoriesHelper(categories, options) {
     prepareQuery(parent).forEach(cat => {
       let cat_lang = cats_lang.find((e) => e._id === cat._id)
       if (!cat_lang) return
+      if (cat_lang.name === 'private') return
       let child;
       if (!depth || level + 1 < depth) {
         child = hierarchicalList(cats_lang, level + 1, cat_lang._id);

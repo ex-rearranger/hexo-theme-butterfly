@@ -8,6 +8,9 @@ block content
         - var archive_date = page.year ? page.year : _p(langPrefix+'page.all')
         - var archive_date = page.month ? (`${archive_date}/${page.month.toString().padStart(2, "0")}`) : archive_date
         - var archive_date = page.day ? (`${archive_date}/${page.day.toString().padStart(2, "0")}`) : archive_date
-        .article-sort-title(lang-type='relative' language=lang)= `${_p(langPrefix+'page.archives')} -  ${archive_date} (${getArchiveLength()})`
-        +articleSort(page.posts)
+        - public_posts = page.posts.filter((post) => post.categories.filter((category) => category.name === 'private').length === 0 )
+        //- - console.log(page.posts.filter((post) => post.categories.filter((category) => category.name === 'private').length === 0 ))
+        //- - console.log('remove private')
+        .article-sort-title(lang-type='relative' language=lang)= `${_p(langPrefix+'page.archives')} -  ${archive_date} (${public_posts.length})`
+        +articleSort(public_posts)
         !=partial('includes/pagination', {langPrefices: langPrefices, globalPageType: globalPageType}, {cache: false})

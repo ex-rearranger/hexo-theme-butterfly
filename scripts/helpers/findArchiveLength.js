@@ -1,9 +1,10 @@
 const {
+  getPageLanguage,
   postFilter,
 } = require('../custom_helpers/i18n')(hexo);
 
 hexo.extend.helper.register('getArchiveLength', function () {
-  const lang = toMomentLocale(this.page.lang || this.page.language || config.language)
+  const lang = getPageLanguage(this.page)
   
   const archiveGenerator = hexo.config.archive_generator
   const posts = this.site.posts.sort('date').filter(postFilter(lang))

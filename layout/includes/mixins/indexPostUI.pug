@@ -10,13 +10,17 @@ mixin indexPostUI()
 
   if globalPageType === 'post'
     - post_data = page.posts.data.sort((a, b) => (b.sticky || 0) - (a.sticky || 0));
+    - post_data = post_data.filter((post) => post.categories.filter((category) => category.name === 'private').length === 0 )
+    //- - console.log('remove private')
   else if globalPageType === 'tag'
     - post_data = page.posts.data.sort((a, b) => (b.sticky_tags.includes(page.tag) || 0) - (a.sticky_tags.includes(page.tag) || 0));
   else if globalPageType === 'category'
     - post_data = page.posts.data.sort((a, b) => (b.sticky_categories.includes(page.category) || 0) - (a.sticky_categories.includes(page.category) || 0));
   else
     - post_data = page.posts.data
-
+    - post_data = post_data.filter((post) => post.categories.filter((category) => category.name === 'private').length === 0 )
+    //- - console.log('remove private')
+  
   #recent-posts.recent-posts.nc(class=masonryLayoutClass)
     .recent-post-items
       each article, index in post_data
