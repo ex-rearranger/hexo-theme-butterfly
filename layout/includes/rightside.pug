@@ -26,6 +26,10 @@ mixin rightsideItem(array)
         if aside.enable && aside.button && page.aside !== false
           button#hide-aside-btn(type="button" title=_p(langPrefix+'rightside.aside'))
             i.fas.fa-arrows-alt-h
+      when 'pomodoro'
+        if theme.aside.card_pomodoro.enable
+          button#pomodoro-button.close(type="button" title=_p(langPrefix+"rightside.pomodoro"))
+            i.fas.fa-stopwatch
       when 'toc'
         if showToc
           button#mobile-toc-button.close(type="button" title=_p(langPrefix+"rightside.toc"))

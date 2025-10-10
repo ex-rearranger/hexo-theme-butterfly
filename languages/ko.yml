@@ -88,6 +88,7 @@ aside:
     code: 코드
   card_toc: 목차
   card_post_series: 시리즈
+  card_pomodoro: 뽀모도로 타이머
 
 date_suffix:
   just: '방금 전'
@@ -111,6 +112,7 @@ rightside:
   setting: 화면 설정 (다크 모드 등)
   aside: 1단 / 2단 전환
   chat: 채팅
+  pomodoro: 뽀모도로
 
 copy_copyright:
   author: 작성자

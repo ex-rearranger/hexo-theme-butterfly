@@ -88,6 +88,7 @@ aside:
     code: Code
   card_toc: Contents
   card_post_series: Series
+  card_pomodoro: Pomodoro Timer
 
 date_suffix:
   just: 'Just now'
@@ -111,6 +112,7 @@ rightside:
   setting: Setting
   aside: Toggle between Single-column and Double-column
   chat: Chat
+  pomodoro: Pomodoro
 
 copy_copyright:
   author: Author

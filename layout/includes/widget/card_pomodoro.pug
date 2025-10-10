@@ -1,0 +1,54 @@
+if theme.aside.card_pomodoro.enable
+  #pomodoro-widget.card-widget
+    .item-headline
+      i.fas.fa-stopwatch
+      each langPrefix, lang in langPrefices
+        span(lang-type='relative' language=lang)= _p(langPrefix+'aside.card_pomodoro')
+      i.fas.fa-angle-left.pomo-toggle-btn
+
+    .pomo-content-wrapper.hidden
+      .mode-buttons
+        button#pomo-pomodoro-btn.active(data-mode="pomodoro") Pomodoro
+        button#pomo-short-break-btn(data-mode="short-break") Short Break
+        button#pomo-long-break-btn(data-mode="long-break") Long Break
+        button#pomo-custom-btn(data-mode="custom")
+          i.fa-regular.fa-sliders
+
+      .progress-bar-container
+        svg.circular-progress-svg(viewBox="0 0 250 250")
+          circle.bg-circle(cx="125", cy="125", r="115")
+          circle#pomo-progress-circle.progress-circle(cx="125", cy="125", r="115")
+        .timer-display.inner-circle
+          span#pomo-minutes 25
+          | :
+          span#pomo-seconds 00
+
+      .controls
+        button#pomo-start-btn
+          i.fa-solid.fa-play(style="margin: 0 -1px 0 1px;")
+        button#pomo-pause-btn
+          i.fa-solid.fa-pause(style="margin: 0 1px;")
+        button#pomo-reset-btn
+          i.fa-solid.fa-rotate(style="margin: 0 -2px;")
+
+  // Custom Timer Modal
+  #pomo-custom-timer-modal.modal-overlay.hidden
+    .modal-content
+      h3 Set Custom Time
+      .slider-group
+        label(for="hours-slider") Hours:
+        input#pomo-hours-slider(type="range", min="0", max="23", value="0")
+        span#pomo-hours-value 0
+      .slider-group
+        label(for="minutes-slider") Minutes:
+        input#pomo-minutes-slider(type="range", min="0", max="59", value="0")
+        span#pomo-minutes-value 0
+      .slider-group
+        label(for="seconds-slider") Seconds:
+        input#pomo-seconds-slider(type="range", min="0", max="59", value="0")
+        span#pomo-seconds-value 0
+      .modal-buttons
+        button#pomo-set-custom-btn Set
+        button#pomo-cancel-custom-btn Cancel
+
+      
