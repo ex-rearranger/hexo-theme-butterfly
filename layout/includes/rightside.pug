@@ -23,11 +23,11 @@ mixin rightsideItem(array)
           button#darkmode(type="button" title=_p(langPrefix+'rightside.night_mode_title'))
             i.fas.fa-adjust
       when 'hideAside'
-        if aside.enable && aside.button && page.aside !== false
+        if aside.enable && (page.aside !== false) && aside.button
           button#hide-aside-btn(type="button" title=_p(langPrefix+'rightside.aside'))
             i.fas.fa-arrows-alt-h
       when 'pomodoro'
-        if theme.aside.card_pomodoro.enable
+        if aside.enable && (page.aside !== false) && theme.aside.card_pomodoro.enable
           button#pomodoro-button.close(type="button" title=_p(langPrefix+"rightside.pomodoro"))
             i.fas.fa-stopwatch
       when 'toc'

@@ -2,14 +2,19 @@
 - let tocExpand = typeof page.toc_expand === 'boolean' ? page.toc_expand : theme.toc.expand
 - let tocExpandClass = tocExpand ? 'is-expand' : ''
 
-#card-toc.card-widget
-  .item-headline
-    i.fas.fa-stream
-    each langPrefix, lang in langPrefices
-      span(lang-type='relative' language=lang)= _p(langPrefix+'aside.card_toc')
-    span.toc-percentage
-
-  if (page.encrypt == true)
-    .toc-content.toc-div-class(class=tocExpandClass style="display:none")!=toc(page.origin, {list_number: tocNumber})
-  else
+if (page.encrypt == true)
+  #card-toc.card-widget(style="display:none")
+    .item-headline
+      i.fas.fa-stream
+      each langPrefix, lang in langPrefices
+        span(lang-type='relative' language=lang)= _p(langPrefix+'aside.card_toc')
+      span.toc-percentage
+    .toc-content(class=tocExpandClass)!=toc(page.origin, {list_number: tocNumber})
+else
+  #card-toc.card-widget
+    .item-headline
+      i.fas.fa-stream
+      each langPrefix, lang in langPrefices
+        span(lang-type='relative' language=lang)= _p(langPrefix+'aside.card_toc')
+      span.toc-percentage
     .toc-content(class=tocExpandClass)!=toc(page.content, {list_number: tocNumber})
