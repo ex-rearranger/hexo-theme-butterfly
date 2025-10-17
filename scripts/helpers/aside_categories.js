@@ -47,6 +47,7 @@ hexo.extend.helper.register('aside_categories', function (categories, options = 
       prepareQuery(parent).forEach(cat => {
         let cat_lang = cats_lang.find((e) => e._id === cat._id)
         if (!cat_lang) return
+        if (cat_lang.name === 'private') return
         if (remaining > 0) {
           remaining -= 1
           let child = ''

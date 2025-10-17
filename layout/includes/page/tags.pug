@@ -4,3 +4,5 @@ if page.orderby === 'random'
 
 div(class=classList.join(' '))
   !=tagcloud({lang: page.lang, source: site.tags, orderby: page.orderby, order: page.order || 1, min_font: 1, max_font: 1.2, limit: 0, unit: 'em', color: true, show_size: true})
+
+.tag-content!= page.content
