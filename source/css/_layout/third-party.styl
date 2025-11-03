@@ -16,8 +16,8 @@
       transform: rotate(360deg)
 
   .vcards .vcard .vcontent.expand
-    &::before,
-    &::after
+    &:before,
+    &:after
       z-index: 22
 
 #waline-wrap
@@ -43,6 +43,11 @@ if hexo-config('waline.bg')
 
       &:focus
         background-image: none
+
+.twikoo
+  .tk-content
+    p
+      margin: 3px 0
 
 .fireworks
   position: fixed
@@ -70,6 +75,32 @@ if hexo-config('mermaid.enable')
     pre > code.mermaid
       display: none
 
+if hexo-config('chartjs.enable')
+  .chartjs-container
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    margin: 0 0 20px
+    text-align: center
+    gap: 20px
+
+    +maxWidth600()
+      .chartjs-wrap
+        width: 100% !important
+
+    &.chartjs-abreast
+      flex-direction: row
+
+      +maxWidth600()
+        flex-direction: column
+
+    .chartjs-wrap
+      width: -webkit-fill-available
+
+    canvas
+      display: inline-block !important
+
 .utterances,
 .fb-comments iframe
   width: 100% !important
@@ -79,36 +110,50 @@ if hexo-config('mermaid.enable')
     margin: 0 0 .8em
     padding: 6px 0 16px
 
-.katex-display
-  overflow: auto hidden
-  padding: 5px
+if hexo-config('math.use')
+  .katex-display
+    overflow: auto hidden
+    padding: 5px
 
-  if hexo-config('katex') && hexo-config('katex.hide_scrollbar')
-    &::-webkit-scrollbar
-      display: none
+    .katex-show
+      display: block
 
-// Mathjax
-mjx-container
-  overflow-x: auto
-  overflow-y: hidden
-  padding-bottom: 4px
-  max-width: 100%
+  .katex
+    display: none
 
-  &[display]
-    display: block !important
-    min-width: auto !important
+    &.katex-show
+      display: inline
 
-  &:not([display])
-    display: inline-grid !important
+  if hexo-config('math.hide_scrollbar')
+    .katex-display,
+    mjx-container
+      scrollbar-width: none
 
-mjx-assistive-mml
-  right: 0
-  bottom: 0
+      &::-webkit-scrollbar
+        display: none
+
+  // Mathjax
+  mjx-container
+    overflow-x: auto
+    overflow-y: hidden
+    padding-bottom: 4px
+    max-width: 100%
+
+    &[display]
+      display: block !important
+      min-width: auto !important
+
+    &:not([display])
+      display: inline-grid !important
+
+  mjx-assistive-mml
+    right: 0
+    bottom: 0
 
 .aplayer
   color: var(--font-color)
 
-#article-container
+.container
   .aplayer
     margin: 0 0 20px
 
@@ -122,7 +167,7 @@ mjx-assistive-mml
           margin: 0
           padding: 0 15px
 
-          &::before
+          &:before
             content: none
 
 .snackbar-css

@@ -16,12 +16,10 @@ hexo.extend.helper.register('inject_head_js', function () {
   const createCustomJs = () => `
     const saveToLocal = {
       set: (key, value, ttl) => {
-        if (ttl === 0) return
-        const now = Date.now()
-        const expiry = now + ttl * 86400000
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
         localStorage.setItem(key, JSON.stringify({ value, expiry }))
       },
-    
       get: key => {
         const itemStr = localStorage.getItem(key)
         if (!itemStr) return undefined
@@ -33,7 +31,7 @@ hexo.extend.helper.register('inject_head_js', function () {
         return value
       }
     }
-    
+
     window.btf = {
       saveToLocal,
       getScript: (url, attr = {}) => new Promise((resolve, reject) => {
@@ -47,7 +45,6 @@ hexo.extend.helper.register('inject_head_js', function () {
         script.onerror = reject
         document.head.appendChild(script)
       }),
-
       getCSS: (url, id) => new Promise((resolve, reject) => {
         const link = document.createElement('link')
         link.rel = 'stylesheet'
@@ -59,7 +56,6 @@ hexo.extend.helper.register('inject_head_js', function () {
         link.onerror = reject
         document.head.appendChild(link)
       }),
-
       addGlobalFn: (key, fn, name = false, parent = window) => {
         if (!${pjax.enable} && key.startsWith('pjax')) return
         const globalFn = parent.globalFn || {}
@@ -152,7 +148,6 @@ hexo.extend.helper.register('inject_head_js', function () {
     }
     detectApple()
   `
-
 
   return `<script>
     (() => {

@@ -34,6 +34,7 @@ en:
       copyright_content: 'All articles are licensed under <a href="%s">%s</a> unless otherwise stated.'
     recommend: Related Articles
     edit: Edited on
+    back_to_home: Back to Home
     notice_outdate:
       message_prev: "It has been "
       message_next: " days since the last update. Thus, the information might be outdated."
@@ -55,6 +56,7 @@ en:
   pagination:
     prev: Previous
     next: Next
+    page_info: 'Page ${current} of ${total}' 
 
   comment: Comments
 
@@ -104,12 +106,12 @@ en:
   rightside:
     langmode_title: Change Site Language (Kor/Eng)
     readmode_title: Read Mode
-    translate_title: Toggle Between Traditional Chinese And Simplified Chinese
-    night_mode_title: Toggle Between Light And Dark Mode
-    back_to_top: Back To Top
-    move_to_bottom: Move To Bottom
+    translate_title: Toggle Between Traditional Chinese and Simplified Chinese
+    night_mode_title: Toggle Between Light and Dark Mode
+    back_to_top: Back to Top
+    move_to_bottom: Move to Bottom
     toc: Table of Contents
-    scroll_to_comment: Scroll To Comments
+    scroll_to_comment: Scroll to Comments
     setting: Setting
     aside: Toggle between Single-column and Double-column
     chat: Chat
@@ -169,6 +171,7 @@ ko:
       copyright_content: "모든 게시물은 별도의 언급이 없는 한 <a href='%s'>%s</a> 라이선스를 따릅니다."
     recommend: 관련 게시물
     edit: 편집
+    back_to_home: 홈으로 돌아가기
     notice_outdate:
       message_prev: "마지막 업데이트로부터 "
       message_next: 일이 지난 게시물입니다. 따라서, 최신 정보가 아닐 수 있습니다.
@@ -190,6 +193,7 @@ ko:
   pagination:
     prev: 이전 게시물
     next: 다음 게시물
+    page_info: '${current} 페이지 / 총 ${total} 페이지'
 
   comment: 댓글
 

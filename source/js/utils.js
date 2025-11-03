@@ -70,7 +70,7 @@
       }
     },
 
-    snackbarShow: (text, showAction = false, duration = 2500) => {
+    snackbarShow: (text, showAction = false, duration = 2000) => {
       const { position, bgLight, bgDark } = GLOBAL_CONFIG.Snackbar
       const bg = document.documentElement.getAttribute('data-theme') === 'light' ? bgLight : bgDark
       Snackbar.show({
@@ -99,24 +99,24 @@
       if (lang){
         dateSuffix = dateSuffix.find(i => i.lang === lang)
         if (diffMonth > 12) return datePost.toISOString().slice(0, 10)
-        if (diffMonth >= 1) return `${parseInt(diffMonth)} ${dateSuffix.month}`
-        if (diffDay >= 1) return `${parseInt(diffDay)} ${dateSuffix.day}`
-        if (diffHour >= 1) return `${parseInt(diffHour)} ${dateSuffix.hour}`
-        if (diffMin >= 1) return `${parseInt(diffMin)} ${dateSuffix.min}`
+        if (diffMonth >= 1) return `${Math.floor(diffMonth)} ${dateSuffix.month}`
+        if (diffDay >= 1) return `${Math.floor(diffDay)} ${dateSuffix.day}`
+        if (diffHour >= 1) return `${Math.floor(diffHour)} ${dateSuffix.hour}`
+        if (diffMin >= 1) return `${Math.floor(diffMin)} ${dateSuffix.min}`
         return dateSuffix.just
       } else {
         if (diffMonth > 12) return datePost.toISOString().slice(0, 10)
-        if (diffMonth >= 1) return dateSuffix.map(i => `<span lang-type="relative" language=${i.lang}> ${parseInt(diffMonth)}${i.month}</span>`).join('')
-        if (diffDay >= 1) return dateSuffix.map(i => `<span lang-type="relative" language=${i.lang}> ${parseInt(diffDay)}${i.day}</span>`).join('')
-        if (diffHour >= 1) return dateSuffix.map(i => `<span lang-type="relative" language=${i.lang}> ${parseInt(diffHour)}${i.hour}</span>`).join('')
-        if (diffMin >= 1) return dateSuffix.map(i => `<span lang-type="relative" language=${i.lang}> ${parseInt(diffMin)}${i.min}</span>`).join('')
+        if (diffMonth >= 1) return dateSuffix.map(i => `<span lang-type="relative" language=${i.lang}> ${Math.floor(diffMonth)}${i.month}</span>`).join('')
+        if (diffDay >= 1) return dateSuffix.map(i => `<span lang-type="relative" language=${i.lang}> ${Math.floor(diffDay)}${i.day}</span>`).join('')
+        if (diffHour >= 1) return dateSuffix.map(i => `<span lang-type="relative" language=${i.lang}> ${Math.floor(diffHour)}${i.hour}</span>`).join('')
+        if (diffMin >= 1) return dateSuffix.map(i => `<span lang-type="relative" language=${i.lang}> ${Math.floor(diffMin)}${i.min}</span>`).join('')
         return dateSuffix.map(i => `<span lang-type="relative" language=${i.lang}> ${i.just} </span>`).join('')
       }
     },
 
     loadComment: (dom, callback) => {
       if ('IntersectionObserver' in window) {
-        const observerItem = new IntersectionObserver((entries) => {
+        const observerItem = new IntersectionObserver(entries => {
           if (entries[0].isIntersecting) {
             callback()
             observerItem.disconnect()
@@ -191,23 +191,12 @@
       return actualTop
     },
 
-    getEleLeft: ele => {
-      let actualLeft = ele.offsetLeft
-      let current = ele.offsetParent
-
-      while (current !== null) {
-        actualLeft += current.offsetLeft
-        current = current.offsetParent
-      }
-      
-      return actualLeft
-    },
-
     loadLightbox: ele => {
       const service = GLOBAL_CONFIG.lightbox
 
       if (service === 'medium_zoom') {
         mediumZoom(ele, { background: 'var(--zoom-bg)' })
+        return
       }
 
       if (service === 'fancybox') {
@@ -220,35 +209,71 @@
         })
 
         if (!window.fancyboxRun) {
-          Fancybox.bind('[data-fancybox]', {
-            Hash: false,
-            Thumbs: {
-              showOnStart: false
-            },
-            Images: {
-              Panzoom: {
-                maxScale: 4
-              }
-            },
-            Carousel: {
-              transition: 'slide'
-            },
-            Toolbar: {
-              display: {
-                left: ['infobar'],
-                middle: [
-                  'zoomIn',
-                  'zoomOut',
-                  'toggle1to1',
-                  'rotateCCW',
-                  'rotateCW',
-                  'flipX',
-                  'flipY'
-                ],
-                right: ['slideshow', 'thumbs', 'close']
+          let options = ''
+          if (Fancybox.version < '6') {
+            options = {
+              Hash: false,
+              Thumbs: {
+                showOnStart: false
+              },
+              Images: {
+                Panzoom: {
+                  maxScale: 4
+                }
+              },
+              Carousel: {
+                transition: 'slide'
+              },
+              Toolbar: {
+                display: {
+                  left: ['infobar'],
+                  middle: [
+                    'zoomIn',
+                    'zoomOut',
+                    'toggle1to1',
+                    'rotateCCW',
+                    'rotateCW',
+                    'flipX',
+                    'flipY'
+                  ],
+                  right: ['slideshow', 'thumbs', 'close']
+                }
               }
             }
-          })
+          } else {
+            options = {
+              Hash: false,
+              Carousel: {
+                transition: 'slide',
+                Thumbs: {
+                  showOnStart: false
+                },
+                Toolbar: {
+                  display: {
+                    left: ['counter'],
+                    middle: [
+                      'zoomIn',
+                      'zoomOut',
+                      'toggle1to1',
+                      'rotateCCW',
+                      'rotateCW',
+                      'flipX',
+                      'flipY',
+                      'reset'
+                    ],
+                    right: ['autoplay', 'thumbs', 'close']
+                  }
+                },
+                Zoomable: {
+                  Panzoom: {
+                    maxScale: 4
+                  }
+                }
+              }
+            }
+          }
+
+          Fancybox.bind('[data-fancybox]', options)
           window.fancyboxRun = true
         }
       }

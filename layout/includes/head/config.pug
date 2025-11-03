@@ -24,7 +24,7 @@
 
   let localSearch = 'undefined';
   if (theme.search.use === 'local_search') {
-    const { CDN, preload, top_n_per_article, unescape } = theme.search.local_search
+    const { CDN, preload, top_n_per_article, pagination, unescape } = theme.search.local_search
     let localsearch_language = [];
     langPreficesArray.forEach(([lang, langPrefix]) => {
       localsearch_language.push({
@@ -39,11 +39,15 @@
       preload,
       top_n_per_article,
       unescape,
+      pagination: {
+        enable: pagination.enable,
+        hitsPerPage: pagination.hitsPerPage
+      },
       languages: localsearch_language
     })
   }
 
-  let translate = 'undefined';
+  let translate = 'undefined'
   if (theme.translate && theme.translate.enable){
     translate = JSON.stringify({
       defaultEncoding: theme.translate.defaultEncoding,
@@ -53,7 +57,7 @@
     })
   }
 
-  let copyright = 'undefined';
+  let copyright = 'undefined'
   if (theme.copy.enable && theme.copy.copyright.enable){
     let copy_language = [];
     langPreficesArray.forEach(([lang, langPrefix]) => {
@@ -71,7 +75,7 @@
     })
   }
 
-  let Snackbar = 'undefined';
+  let Snackbar = 'undefined'
   if (theme.snackbar && theme.snackbar.enable) {
     Snackbar = JSON.stringify({
       chs_to_cht: langPreficesArray.map(([lang, langPrefix]) =>  [lang, _p(langPrefix+"Snackbar.chs_to_cht")]),
@@ -144,7 +148,6 @@ script.
     algolia: !{algolia},
     localSearch: !{localSearch},
     translate: !{translate},
-    noticeOutdate: !{noticeOutdate},
     highlight: !{highlight},
     copy: !{copy},
     relativeDate: {

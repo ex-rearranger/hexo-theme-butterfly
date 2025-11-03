@@ -5,6 +5,7 @@
     - const tocStyle = page.toc_style_simple
     - const tocStyleVal = tocStyle === true || tocStyle === false ? tocStyle : theme.toc.style_simple
     if showToc && tocStyleVal
+      //- simple toc style : pomodoro -> ToC -> series -> ad
       .sticky_layout
         include ./card_pomodoro.pug
         include ./card_post_toc.pug
@@ -12,7 +13,7 @@
           include ./card_post_series.pug
         include ./card_ad.pug
     else
-      //- changed to cache false since the content should be different among language settings
+      //- normal style: author -> announcement -> top_self -> pomodoro -> ToC -> series -> recent_post -> ad
       include ./card_author.pug
       include ./card_announcement.pug
       include ./card_top_self.pug
@@ -25,7 +26,8 @@
         include ./card_recent_post.pug
         include ./card_ad.pug
   else
-    //- page
+    //- page: author -> announcement -> top_self -> pomodoro -> ToC -> categories -> tags -> recent_post 
+    //-       -> ad -> newest_comment -> archives -> webinfo -> bottom_self
     include ./card_author.pug
     include ./card_announcement.pug
     include ./card_top_self.pug

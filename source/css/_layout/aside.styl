@@ -8,25 +8,23 @@
       padding-right: 15px
 
   +maxWidth1024()  // original: +maxWidth900()
+    margin-top: 1.2em  // original: 20px
     width: 100%
-
-  > .card-widget:first-child
-    margin-top: 0
-
-    +maxWidth1024()  // +maxWidth900()
-      margin-top: 1.2em  // original: 20px
 
   .card-widget
     @extend .cardHover
     position: relative
     overflow: hidden
-    margin-top: 1.2em  // original: 20px
+    margin-bottom: 1.2em  // original: 20px
     padding: 1.2em 1.5em 1.5em  // original: 20px 24px
 
     if hexo-config('aside.mobile') == false
       +maxWidth768()
         &:not(#card-toc)
           display: none
+
+    // &:last-child
+    //   margin-bottom: 0
     
     // additionals
     > :nth-child(2):not(.pomo-content-wrapper)
@@ -36,7 +34,7 @@
 
   .card-info
     .author-info
-      &__name
+      &-name
         font-weight: 500
         font-size: 1.57em
 
@@ -48,7 +46,7 @@
         white-space: nowrap
         line-clamp: 1
 
-    .card-info-data
+    .site-data
       margin: 14px 0 4px
 
     .card-info-social-icons
@@ -72,6 +70,8 @@
       color: var(--btn-color)
       text-align: center
       line-height: 2.4
+      addBorderRadius(7)
+      @extend .btn-effects
 
       &:hover
         background-color: var(--btn-hover-color)
@@ -93,6 +93,7 @@
   .sticky_layout
     +minWidth900()
       position: sticky
+      position: -webkit-sticky
       top: 20px
       transition: top .3s
     
@@ -162,8 +163,9 @@
 
       .thumbnail
         overflow: hidden
-        width: w = 3em // original: 4.2em
+        width: w = 3em // original: 4em
         height: w
+        // addBorderRadius()
 
         :first-child
           @extend .imgHover
@@ -181,7 +183,7 @@
         & > .name
           display: block
           color: var(--meta-color)
-          font-size: 85%
+          font-size: .85em
 
         & > .title,
         & > .comment
@@ -208,13 +210,16 @@
     a
       display: flex
       flex-direction: row
-      padding: 0.2em 0.6em  // original: 3px 10px
+      // margin: 2px 0
+      padding: 0.2em 0.6em  // original: 2px 8px
       color: var(--font-color)
-      transition: background-color .3s, padding .4s
+      transition: background-color .3s, padding .3s
+      // addBorderRadius()
 
       &:hover
-        padding: 0.2em 0.8em  // original: 3px 17px
+        padding: 0.2em 0.8em  // original: 2px 12px
         background-color: var(--text-bg-hover)
+        // color: var(--white)
 
       span
         @extend .limit-one-line
@@ -226,6 +231,11 @@
     .card-category-list
       &.child
         // padding: 0 0 0 16px
+        overflow: hidden
+        max-height: 0
+        opacity: 0
+        visibility: hidden
+        // transition: max-height .3s ease, opacity .3s ease
         padding-left: 0.5em
 
       > .parent
@@ -235,7 +245,10 @@
               transform: rotate(-90deg)
 
             & + .child
-              display: block
+              max-height: 1000px
+              opacity: 1
+              visibility: visible
+              transition: max-height 2s, opacity .5s ease-in-out, visibility .5s ease-in-out
 
           .card-category-list
             &-name
@@ -255,9 +268,12 @@
             &:hover
               color: var(--text-hover)
 
-        if hexo-config('aside.card_categories.expand') == false
-          > .child
-            display: none
+        > .child
+          transition: max-height 0.5s, opacity 2s ease-in-out, visibility 2s ease-in-out
+          if hexo-config('aside.card_categories.expand') == false
+            max-height: 0
+            opacity: 0
+            visibility: hidden
 
   .card-webinfo
     .webinfo
@@ -345,9 +361,10 @@
       .toc-link
         display: block
         margin: 0.25em 0  // original: 4px 0
-        padding: 1px 0.6em  // original: 1px 6px
+        padding: 1px 0.6em  // original: 1px 8px
         color: var(--toc-link-color)
         transition: background-color .2s ease-in-out
+        // addBorderRadius()
         @extend .limit-one-line
 
         &:hover
@@ -364,6 +381,7 @@
   .card-more-btn
     float: right
     // color: inherit  // a hover를 위해 주석처리
+    
     // additionals
     padding: 0.4em 0.5em
     font-size: 0.6em
@@ -410,13 +428,13 @@
     .headline
       @extend .limit-one-line
       color: var(--font-color)
+      // font-size: .95em
 
     .length-num
-      margin-top: -0.1em  // original: -.32em
+      margin-top: -0.1em  // original: -.45em
       color: var(--text-highlight-color)
-      font-size: 1.4em
+      font-size: 1.2em
 
-vendors = 'official'
 @keyframes more-btn-move
   0%,
   100%
@@ -425,7 +443,6 @@ vendors = 'official'
   50%
     transform: translateX(3px)
 
-vendors = 'official'
 @keyframes toc-open
   0%
     transform: scale(.7)
@@ -433,7 +450,6 @@ vendors = 'official'
   100%
     transform: scale(1)
 
-vendors = 'official'
 @keyframes toc-close
   0%
     transform: scale(1)
@@ -461,9 +477,9 @@ vendors = 'official'
     .card-recent-post
       order: hexo-config('aside.card_recent_post.sort_order')
 
-  if hexo-config('newest_comments.sort_order')
+  if hexo-config('aside.card_newest_comments.sort_order')
     #card-newest-comments
-      order: hexo-config('newest_comments.sort_order')
+      order: hexo-config('aside.card_newest_comments.sort_order')
 
   if hexo-config('aside.card_categories.sort_order')
     .card-categories

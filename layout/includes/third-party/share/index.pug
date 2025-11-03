@@ -5,6 +5,6 @@ if use
     .post-share
       case use
         when 'addtoany'
-          include ./addtoany.pug
+          !=partial('includes/third-party/share/addtoany', {}, {cache: true})
         when 'sharejs'
           include ./share-js.pug

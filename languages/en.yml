@@ -33,6 +33,7 @@ post:
     copyright_content: 'All articles are licensed under <a href="%s">%s</a> unless otherwise stated.'
   recommend: Related Articles
   edit: Edited on
+  back_to_home: Back to Home
   notice_outdate:
     message_prev: "It has been "
     message_next: " days since the last update. Thus, the information might be outdated."
@@ -54,6 +55,7 @@ search:
 pagination:
   prev: Previous
   next: Next
+  page_info: 'Page ${current} of ${total}' 
 
 comment: Comments
 
@@ -103,12 +105,12 @@ share: Share
 rightside:
   langmode_title: Change Site Language (Kor/Eng)
   readmode_title: Read Mode
-  translate_title: Toggle Between Traditional Chinese And Simplified Chinese
-  night_mode_title: Toggle Between Light And Dark Mode
-  back_to_top: Back To Top
-  move_to_bottom: Move To Bottom
+  translate_title: Toggle Between Traditional Chinese and Simplified Chinese
+  night_mode_title: Toggle Between Light and Dark Mode
+  back_to_top: Back to Top
+  move_to_bottom: Move to Bottom
   toc: Table of Contents
-  scroll_to_comment: Scroll To Comments
+  scroll_to_comment: Scroll to Comments
   setting: Setting
   aside: Toggle between Single-column and Double-column
   chat: Chat

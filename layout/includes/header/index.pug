@@ -1,4 +1,3 @@
-
 -
   const returnTopImg = img => img !== false ? img || theme.default_top_img : false
   const isFixedClass = theme.nav.fixed ? ' fixed' : ''
@@ -61,4 +60,4 @@ header#page-header(class=`${headerClassName + isFixedClass}` style=bg_img)
   else
     //- improve seo
     if globalPageType !== 'post'
-      h1.title-seo(style='display:none;')=page.title || page.tag || page.category || config.title
+      h1.title-seo=page.title || page.tag || page.category || config.title

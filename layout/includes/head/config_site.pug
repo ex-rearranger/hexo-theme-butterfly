@@ -2,8 +2,8 @@
   const titleVal = pageTitle.replace(/'/ig,"\\'")
 
   let isHighlightShrink
-  if (theme.highlight_shrink == 'none') isHighlightShrink = 'undefined'
-  else if (page.highlight_shrink === true || page.highlight_shrink === false) isHighlightShrink = page.highlight_shrink
+  if (theme.code_blocks.shrink == 'none') isHighlightShrink = 'undefined'
+  else if (typeof page.highlight_shrink == 'boolean') isHighlightShrink = page.highlight_shrink
   else isHighlightShrink = theme.code_blocks.shrink
 
   var showToc = false

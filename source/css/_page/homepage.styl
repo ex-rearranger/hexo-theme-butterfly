@@ -1,5 +1,4 @@
-// $indexLayout = hexo-config('index_layout') || 1
-$indexLayout = 2
+$indexLayout = hexo-config('index_layout') || 1
 $indexEnable = hexo-config('cover.index_enable')
 
 #recent-posts
@@ -44,10 +43,10 @@ $indexEnable = hexo-config('cover.index_enable')
     .post-cover
       overflow: hidden
 
-      if (($indexLayout != 5) && ($indexLayout != 7))
-        // +maxWidth768()
-        //   width: 100%
-        //   height: 230px
+      if ($indexLayout != 5 && ($indexLayout != 7))
+        +maxWidth768()
+          width: 100%
+          height: 230px
 
       if (($indexLayout == 1) || ($indexLayout == 2) || ($indexLayout == 3))
         width: calc(max(14em, 30%) + 10px)  // original: 42%
@@ -61,9 +60,10 @@ $indexEnable = hexo-config('cover.index_enable')
           &:not(.no-cover)
             right: 0
             mask-image: linear-gradient(to left, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.2) 20%, transparent 100%);
-          // &.left
-          //   left: 0
-          //   mask-image: linear-gradient(to right, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.2) 20%, transparent 100%)
+          
+            &.left
+              left: 0
+              mask-image: linear-gradient(to right, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.2) 20%, transparent 100%)
 
         &.right
           order: 1
@@ -94,17 +94,10 @@ $indexEnable = hexo-config('cover.index_enable')
         @extend .imgHover
 
     & >.recent-post-info
-      // +maxWidth768()
-      //   padding: 20px 20px 30px
-      //   width: 100%
-      
-      // additionals
-      +maxWidth900()
-        padding: 0 1.4em
-      
-      // additionals
       +maxWidth768()
+        // padding: 20px 20px 30px
         width: 100%
+        // additionals
         position: absolute
         background-clip: text
 
@@ -113,15 +106,19 @@ $indexEnable = hexo-config('cover.index_enable')
         
         +lightmode()
           mix-blend-mode: multiply
-
+      
+      // additionals
+      +maxWidth900()
+        padding: 0 1.4em
+      
       if (($indexLayout == 1) || ($indexLayout == 2) || ($indexLayout == 3))
         padding: 0 30px // original: 0 40px
         width: calc(min(100% - 14em, 70%) - 10px) // original: 58%
 
-      if (($indexLayout == 4) || ($indexLayout == 5) || ($indexLayout == 6) || ($indexLayout == 7))
+      if $indexLayout == 4 || ($indexLayout == 5 || ($indexLayout == 6 || ($indexLayout == 7)))
         padding: 30px 30px 25px
 
-      if (($indexLayout == 5) || ($indexLayout == 7)) && $indexEnable
+      if ($indexLayout == 5 || ($indexLayout == 7)) && $indexEnable
         &:not(.no-cover)
           position: absolute
           top: 50%
@@ -130,16 +127,16 @@ $indexEnable = hexo-config('cover.index_enable')
           color: var(--text-highlight-color)
           transform: translateY(-50%)
           --text-highlight-color: rgba(255, 255, 255, 1)
-          --card-meta: rgba(255, 255, 255, .7)
+          --meta-color: rgba(255, 255, 255, .7)
 
       &.no-cover
         +maxWidth768()
           padding: 30px 20px
 
-        if (($indexLayout == 1) || ($indexLayout == 2) || ($indexLayout == 3))
+        if $indexLayout == 1 || ($indexLayout == 2 || ($indexLayout == 3))
           width: 100%
 
-        if (($indexLayout == 4) || ($indexLayout == 5) || ($indexLayout == 6 || ($indexLayout == 7)))
+        if $indexLayout == 4 || ($indexLayout == 5 || ($indexLayout == 6 || ($indexLayout == 7)))
           padding: 35px 30px
 
       & > .article-title
@@ -147,7 +144,7 @@ $indexEnable = hexo-config('cover.index_enable')
         color: var(--text-highlight-color)
         font-size: 1.4em  // original: 1.55em
         line-height: 1.4
-        // transition: font-size .2s
+        // transition: font-size .2s ease-in-out
         line-clamp: 2
         // additionals
         font-weight: 400
@@ -156,6 +153,7 @@ $indexEnable = hexo-config('cover.index_enable')
           margin-right: 0.5em  // original: 10px
           color: var(--sticky-color)
           transform: rotate(45deg)
+          // additionals
           font-size: 0.9em
 
         // +maxWidth768()
@@ -204,7 +202,7 @@ $indexEnable = hexo-config('cover.index_enable')
             display: none
 
         a
-          color: var(--card-meta)
+          color: var(--meta-color)
 
           &:hover
             color: var(--text-hover)
@@ -213,5 +211,5 @@ $indexEnable = hexo-config('cover.index_enable')
       & > .content
         @extend .limit-more-line
         line-clamp: 2
-        // additionals
+        // word-break: break-word
         hyphens: auto

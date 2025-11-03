@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
   let headerContentWidth, $nav, $sidebar
   let mobileSidebarOpen = false
 
@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function () {
       restore()
       return height
     }
-    
+
     const createEle = (lang, item) => {
       const fragment = document.createDocumentFragment()
 
@@ -183,12 +183,7 @@ document.addEventListener('DOMContentLoaded', function () {
         fragment.appendChild(ele)
       }
 
-      if (isPrismjs) {
-        item.parentNode.insertBefore(fragment, item)
-      }
-      else {
-        item.insertBefore(fragment, item.firstChild)
-      }
+      isPrismjs ? item.parentNode.insertBefore(fragment, item) : item.insertBefore(fragment, item.firstChild)
     }
 
     $figureHighlight.forEach(item => {
@@ -601,7 +596,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (isToc) {
         $cardToc.querySelectorAll('.active').forEach(i => { i.classList.remove('active') })
 
-        if (currentId === '') return
+        if (!currentId) return
 
         const currentActive = $tocLink[currentIndex]
         currentActive.classList.add('active')
@@ -1143,7 +1138,6 @@ document.addEventListener('DOMContentLoaded', function () {
     cardCategories.forEach(cardCategory => {
       btf.addEventListenerPjax(cardCategory, 'click', handleToggleBtn, true)
     })
-    // btf.addEventListenerPjax(cardCategory, 'click', handleToggleBtn, true)
   }
 
   const addPostOutdateNotice = () => {  // 변경된 항목 : multi-language 적용

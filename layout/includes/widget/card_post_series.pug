@@ -6,11 +6,11 @@ if theme.aside.card_post_series.enable
         i.fa-solid.fa-layer-group
         span= theme.aside.card_post_series.series_title ? page.series : _p(langPrefix+'aside.card_post_series')
       .aside-list
-        - let i = 0
+        - let count_item = 0
         each item in array[page.series]
           - if (!is_default_language(item.lang) && lang != item.lang)
             - continue
-          - i++
+          - count_item++
           - const { path, title = _p(langPrefix+'no_title'), date:dateA } = item
           - let link = url_for(path)
           - const cover = (item.cover === false) ? theme.cover.default_cover_aside : item.cover
@@ -27,5 +27,5 @@ if theme.aside.card_post_series.enable
                 else
                   div(style=`background: ${cover}`)
             .content
-              a.title(href=link title=title)= `${i} \) ${title}`
+              a.title(href=link title=title)= `${count_item} \) ${title}`
               time(datetime=date_xml(dateA) title=_p(langPrefix+'post.created') + ' ' + full_date(dateA, format=config.full_date_format)) #[=date(dateA, config.date_format)]

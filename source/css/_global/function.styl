@@ -10,7 +10,7 @@
 .fontawesomeIcon
   display: inline-block
   font-weight: 600
-  font-family: 'Font Awesome 6 Free'
+  font-family: 'Font Awesome 7 Free', 'Font Awesome 6 Free'
   text-rendering: auto
   -webkit-font-smoothing: antialiased
 
@@ -23,10 +23,10 @@ addBorderRadius(x = 6, hide = false)
 
 // card hover
 .cardHover
-  border-radius: 8px
   background: var(--card-bg)
   box-shadow: 0 3px 8px 6px var(--card-box-shadow)
   transition: box-shadow .3s
+  addBorderRadius(8)
 
   &:hover
     box-shadow: 0 3px 8px 6px var(--card-hover-box-shadow)
@@ -34,7 +34,7 @@ addBorderRadius(x = 6, hide = false)
 .imgHover
   width: 100%
   height: 100%
-  transition: transform .6s // all .6s, filter 375ms ease-in .2s
+  transition: transform .6s //, filter 375ms ease-in .2s
   object-fit: cover
 
   &:hover
@@ -43,7 +43,7 @@ addBorderRadius(x = 6, hide = false)
 .postImgHover
   &:hover
     .cover
-      opacity: .7 // original: .8
+      opacity: .7 // original: .5
       transform: scale(1.1)
 
   .cover
@@ -51,7 +51,7 @@ addBorderRadius(x = 6, hide = false)
     width: 100%
     height: 100%
     opacity: .1 // original: .4
-    transition: all .6s // , filter 375ms ease-in .2s
+    transition: all .6s //, filter 375ms ease-in .2s
     object-fit: cover
 
 .list-beauty
@@ -78,12 +78,6 @@ addBorderRadius(x = 6, hide = false)
       cursor: pointer
       transition: border-color .3s ease-out
 
-.verticalCenter
-  position: absolute
-  top: 50%
-  width: 100%
-  transform: translate(0, -50%)
-
 .custom-hr
   position: relative
   margin: 40px auto
@@ -107,6 +101,12 @@ addBorderRadius(x = 6, hide = false)
       line-height: 1
       transition: left 1s ease-in-out
       @extend .fontawesomeIcon
+
+.verticalCenter
+  position: absolute
+  top: 50%
+  width: 100%
+  transform: translate(0, -50%)
 
 maxWidth600()
   @media screen and (max-width: 600px)
@@ -206,7 +206,60 @@ if hexo-config('avatar.effect') == true
 .reward-main
   animation: donate_effcet .3s .1s ease both
 
-vendors = 'official'
+.btn-effects
+  position: relative
+  overflow: hidden
+  transition: all .3s cubic-bezier(.4, 0, .2, 1)
+  transform: translateZ(0)
+
+  &:hover
+    box-shadow: 0 4px 12px var(--card-hover-box-shadow)
+    text-decoration: none
+    transform: translateY(-1px) scale(1.02)
+
+  &:active
+    transition-duration: .1s
+    transform: translateY(0) scale(.98)
+
+  i
+    display: inline-block
+    vertical-align: middle
+    transition: all .3s cubic-bezier(.4, 0, .2, 1)
+
+  &:hover i
+    animation: buttonIconBounce .6s ease-in-out
+
+  i + span
+    margin-left: 6px
+    vertical-align: middle
+    transition: margin-left .3s cubic-bezier(.4, 0, .2, 1)
+
+  &:hover i + span
+    margin-left: 8px
+
+  &::before
+    position: absolute
+    top: 0
+    left: -100%
+    z-index: 1
+    width: 100%
+    height: 100%
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .2), transparent)
+    content: ''
+    transition: left .5s cubic-bezier(.4, 0, .2, 1)
+
+  &:hover::before
+    left: 100%
+
+  & > *
+    position: relative
+    z-index: 2
+
+.btn-effects-large
+  &:hover
+    box-shadow: 0 6px 16px var(--card-hover-box-shadow)
+    transform: translateY(-2px) scale(1.03)
+
 @keyframes scroll-down-effect
   0%
     opacity: .4
@@ -220,7 +273,6 @@ vendors = 'official'
     opacity: .4
     transform: translate(0, 0)
 
-vendors = 'official'
 @keyframes header-effect
   0%
     transform: translateY(-35px)
@@ -228,7 +280,6 @@ vendors = 'official'
   100%
     transform: translateY(0)
 
-vendors = 'official'
 @keyframes bottom-top
   0%
     transform: translateY(35px)
@@ -236,7 +287,6 @@ vendors = 'official'
   100%
     transform: translateY(0)
 
-vendors = 'official'
 @keyframes titleScale
   0%
     opacity: 0
@@ -246,7 +296,6 @@ vendors = 'official'
     opacity: 1
     transform: scale(1)
 
-vendors = 'official'
 @keyframes search_close
   0%
     opacity: 1
@@ -256,7 +305,6 @@ vendors = 'official'
     opacity: 0
     transform: scale(.7)
 
-vendors = 'official'
 @keyframes to_show
   0%
     opacity: 0
@@ -264,7 +312,6 @@ vendors = 'official'
   100%
     opacity: 1
 
-vendors = 'official'
 @keyframes to_hide
   0%
     opacity: 1
@@ -272,7 +319,6 @@ vendors = 'official'
   100%
     opacity: 0
 
-vendors = 'official'
 @keyframes ribbon_to_show
   0%
     opacity: 0
@@ -280,7 +326,6 @@ vendors = 'official'
   100%
     opacity: hexo-config('canvas_ribbon.alpha')
 
-vendors = 'official'
 @keyframes avatar_turn_around
   from
     transform: rotate(0)
@@ -288,7 +333,6 @@ vendors = 'official'
   to
     transform: rotate(360deg)
 
-vendors = 'official'
 @keyframes sub_menus
   0%
     opacity: 0
@@ -298,7 +342,6 @@ vendors = 'official'
     opacity: 1
     transform: translateY(0)
 
-vendors = 'official'
 @keyframes donate_effcet
   0%
     opacity: 0
@@ -308,10 +351,23 @@ vendors = 'official'
     opacity: 1
     transform: translateY(0)
 
-vendors = 'official'
 @keyframes sidebarItem
   0%
     transform: translateX(200px)
 
   100%
     transform: translateX(0)
+
+@keyframes buttonIconBounce
+  0%,
+  100%
+    transform: translateY(0) scale(1)
+
+  25%
+    transform: translateY(-3px) scale(1.1) rotateZ(-5deg)
+
+  50%
+    transform: translateY(0) scale(1.05) rotateZ(0)
+
+  75%
+    transform: translateY(-1px) scale(1.02) rotateZ(2deg)

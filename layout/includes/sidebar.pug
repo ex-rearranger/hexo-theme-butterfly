@@ -1,21 +1,22 @@
-#sidebar
-  #menu-mask
-  #sidebar-menus
-    .avatar-img.text-center
-      img(src=url_for(theme.avatar.img) onerror=`onerror=null;src='${theme.error_img.flink}'` alt="avatar")
-    .site-data.text-center
-      a(href=url_for_lang(config.archive_dir) + '/')
-        each langPrefix, lang in langPrefices
-          .headline(lang-type='relative' language=lang)= _p(langPrefix+'aside.articles') 
-        .length-num= site.posts.length
-      a(href=url_for_lang(config.tag_dir) + '/' )
-        each langPrefix, lang in langPrefices
-          .headline(lang-type='relative' language=lang)= _p(langPrefix+'aside.tags')
-        .length-num= site.tags.length
-      a(href=url_for_lang(config.category_dir) + '/')
-        each langPrefix, lang in langPrefices
-          .headline(lang-type='relative' language=lang)= _p(langPrefix+'aside.categories') 
-        .length-num= site.categories.length
+if theme.menu
+  #sidebar
+    #menu-mask
+    #sidebar-menus
+      .avatar-img.text-center
+        img(src=url_for(theme.avatar.img) onerror=`this.onerror=null;this.src='${url_for(theme.error_img.flink)}'` alt="avatar")
+      .site-data.text-center
+        a(href=`${url_for_lang(config.archive_dir)}/`)
+          each langPrefix, lang in langPrefices
+            .headline(lang-type='relative' language=lang)= _p(langPrefix+'aside.articles') 
+          .length-num= site.posts.length
+        a(href=`${url_for_lang(config.tag_dir)}/`)
+          each langPrefix, lang in langPrefices
+            .headline(lang-type='relative' language=lang)= _p(langPrefix+'aside.tags')
+          .length-num= site.tags.length
+        a(href=`${url_for_lang(config.category_dir)}/`)
+          each langPrefix, lang in langPrefices
+            .headline(lang-type='relative' language=lang)= _p(langPrefix+'aside.categories') 
+          .length-num= site.categories.length
 
     hr.custom-hr
     //- changed to cache false since the content should be different among language settings

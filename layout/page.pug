@@ -28,10 +28,13 @@ block content
       case page.type
         when 'tags'
           include includes/page/tags.pug
+        +commentLoad
         when 'link'
           include includes/page/flink.pug
+        +commentLoad
         when 'categories'
           include includes/page/categories.pug
+        +commentLoad
         when '404'
           //- changed to cache false since the content should be different among language settings
           !=partial('includes/page/404', {langPrefices: langPrefices}, {cache: false})
@@ -39,6 +42,3 @@ block content
           include includes/page/shuoshuo.pug
         default
           include includes/page/default-page.pug
-    
-    if ['404', 'shuoshuo'].includes(page.type) === false
-      +commentLoad

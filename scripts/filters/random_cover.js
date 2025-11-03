@@ -1,16 +1,24 @@
+/**
+ * Random cover for posts
+ */
+
 'use strict'
 
-hexo.extend.filter.register('before_post_render', data => {  // extend post는 중복으로 인한 에러 발생
+hexo.extend.generator.register('post', locals => {
   const previousIndexes = []
+
   const getRandomCover = defaultCover => {
     if (!defaultCover) return false
     if (!Array.isArray(defaultCover)) return defaultCover
 
     const coverCount = defaultCover.length
+
     if (coverCount === 1) {
       return defaultCover[0]
     }
+
     const maxPreviousIndexes = coverCount === 2 ? 1 : (coverCount === 3 ? 2 : 3)
+
     let index
     do {
       index = Math.floor(Math.random() * coverCount)
@@ -54,5 +62,21 @@ hexo.extend.filter.register('before_post_render', data => {  // extend post는 �
 
     return data
   }
-  return handleImg(data)
+
+  // https://github.com/hexojs/hexo/blob/master/lib%2Fplugins%2Fgenerator%2Fpost.ts
+  const posts = locals.posts.sort('date').toArray()
+  const { length } = posts
+
+  return posts.map((post, i) => {
+    if (i) post.prev = posts[i - 1]
+    if (i < length - 1) post.next = posts[i + 1]
+
+    post.__post = true
+
+    return {
+      data: handleImg(post),
+      layout: 'post',
+      path: post.path
+    }
+  })
 })

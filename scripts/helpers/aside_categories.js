@@ -3,13 +3,11 @@ const { ca } = require('../custom_helpers/rfc5646');
 const {
   pathJoin,
   postFilter,
-  getPageLanguage,
 } = require('../custom_helpers/i18n')(hexo);
 
 'use strict'
 
 hexo.extend.helper.register('aside_categories', function (categories, options = {}) {
-
   if (!categories || !Object.prototype.hasOwnProperty.call(categories, 'length')) {
     options = categories || {}
     categories = this.site.categories
@@ -24,7 +22,7 @@ hexo.extend.helper.register('aside_categories', function (categories, options = 
   const langPrefix = options.langPrefix 
     ? options.langPrefix 
     : (this.is_default_language(this.page.lang) ? `${lang}` : '')
-  
+
   const { config } = this
   const showCount = Object.prototype.hasOwnProperty.call(options, 'show_count') ? options.show_count : true
   const depth = options.depth ? parseInt(options.depth, 10) : 0
@@ -57,7 +55,7 @@ hexo.extend.helper.register('aside_categories', function (categories, options = 
             remaining = childList.remaining
           }
 
-          const parentClass = isExpand && child ? 'parent' : ''
+          const parentClass = isExpand && !parent && child ? 'parent' : ''
           result += `<li class="card-category-list-item ${parentClass}">`
           result += `<a class="card-category-list-link" href="${this.url_for_lang(cat_lang.path)}">`
           result += `<span class="card-category-list-name">${cat_lang.name}</span>`
@@ -66,7 +64,7 @@ hexo.extend.helper.register('aside_categories', function (categories, options = 
             result += `<span class="card-category-list-count">${cat_lang.length}</span>`
           }
 
-          if (isExpand && child) {
+          if (isExpand && !parent && child) {
             result += `<i class="fas fa-caret-left ${expandClass}"></i>`
           }
 

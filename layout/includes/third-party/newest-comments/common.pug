@@ -13,10 +13,10 @@ script.
     changeContent: content => {
       if (content === '') return content
 
-      content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, newestComments.p_for_multilang("aside.card_newest_comments.image")) // replace image link
-      content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, newestComments.p_for_multilang("aside.card_newest_comments.link")) // replace url
-      content = content.replace(/<pre><code>.*?<\/pre>/gi, newestComments.p_for_multilang("aside.card_newest_comments.code")) // replace code
-      content = content.replace(/<code>.*?<\/code>/gi, newestComments.p_for_multilang("aside.card_newest_comments.code")) // replace code
+      content = content.replace(/<img.*?src="(.*?)"?[^\>]+>/ig, '[!{_p("aside.card_newest_comments.image")}]') // replace image link
+      content = content.replace(/<a[^>]+?href=["']?([^"']+)["']?[^>]*>([^<]+)<\/a>/gi, '[!{_p("aside.card_newest_comments.link")}]') // replace url
+      content = content.replace(/<pre><code>.*?<\/pre>/gi, '[!{_p("aside.card_newest_comments.code")}]') // replace code
+      content = content.replace(/<code>.*?<\/code>/gi, '[!{_p("aside.card_newest_comments.code")}]') // replace code
       content = content.replace(/<[^>]+>/g, "") // remove html tag
 
       if (content.length > 150) {
@@ -44,7 +44,7 @@ script.
           </div></div>`
         }
       } else {
-        result += newestComments.p_for_multilang("aside.card_newest_comments.zero")
+        result += '!{_p("aside.card_newest_comments.zero")}'
       }
 
       ele.innerHTML = result

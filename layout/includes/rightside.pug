@@ -43,30 +43,22 @@ mixin rightsideItem(array)
           a#to_comment(href="#post-comment" title=_p(langPrefix+"rightside.scroll_to_comment"))
             i.fas.fa-comments
 
-#rightside(class='rightside-show')
-  - const { enable, hide, show } = theme.rightside_item_order
-  - const hideArray = enable ? hide && hide.split(',') : ['readmode','translate','darkmode','hideAside']
-  - const showArray = enable ? show && show.split(',') : ['toc','chat','comment']
+- const { enable, hide, show } = theme.rightside_item_order
+- const hideArray = enable && hide ? hide.split(',') : ['readmode','translate','darkmode','hideAside']
+- const showArray = enable && show ? show.split(',') : ['toc','chat','comment']
+- const needCogBtn = (enable && hide) || (!enable && ((globalPageType === 'post' && (readmode || translate.enable || (darkmode.enable && darkmode.button))) || (translate.enable || (darkmode.enable && darkmode.button))))
 
-
+#rightside
   #rightside-config-hide
-    if hideArray
+    if hideArray.length
       +rightsideItem(hideArray)
-  #rightside-config-show
-    if enable
-      if hide
-        button#rightside-config(type="button" title=_p(langPrefix+"rightside.setting"))
-          i.fas.fa-cog.slow-spin
-    else
-      if globalPageType === 'post'
-        if (readmode || translate.enable || (darkmode.enable && darkmode.button))
-          button#rightside-config(type="button" title=_p(langPrefix+"rightside.setting"))
-            i.fas.fa-cog.slow-spin
-      else if translate.enable || (darkmode.enable && darkmode.button)
-        button#rightside-config(type="button" title=_p(langPrefix+"rightside.setting"))
-          i.fas.fa-cog.slow-spin
 
-    if showArray
+  #rightside-config-show
+    if needCogBtn
+      button#rightside-config(type="button" title=_p("rightside.setting"))
+        i.fas.fa-cog(class=theme.rightside_config_animation ? 'slow-spin' : '')
+
+    if showArray.length
       +rightsideItem(showArray)
 
     button#go-up(type="button" title=_p(langPrefix+"rightside.back_to_top"))

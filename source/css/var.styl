@@ -14,8 +14,9 @@ $theme-paginator-color = $themeColorEnable && hexo-config('theme_color.paginator
 // $theme-toc-color = $themeColorEnable && hexo-config('theme_color.toc_color') ? convert(hexo-config('theme_color.toc_color')) : $strong-cyan
 
 // font
-$dafault-font-family = -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Lato, Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif
-$dafault-code-font = consolas, Menlo, 'PingFang SC', 'Microsoft YaHei', sans-serif
+$chineseFont = $language == 'zh-CN' ? 'Microsoft YaHei' : 'Microsoft JhengHei'
+$dafault-font-family = -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Lato, Roboto, 'PingFang SC', $chineseFont, sans-serif
+$dafault-code-font = consolas, Menlo, monospace, 'PingFang SC', $chineseFont, sans-serif
 $font-family = hexo-config('font.font-family') ? unquote(hexo-config('font.font-family')) : $dafault-font-family
 $code-font-family = hexo-config('font.code-font-family') ? unquote(hexo-config('font.code-font-family')) : $dafault-code-font
 $site-name-font = hexo-config('blog_title_font.font-family') && unquote(hexo-config('blog_title_font.font-family'))
@@ -30,12 +31,11 @@ $beautifyEnable = hexo-config('beautify.enable')
 $title-prefix-icon = $beautifyEnable && hexo-config('beautify.title-prefix-icon') ? hexo-config('beautify.title-prefix-icon') : '\f0c1'
 $title-prefix-icon-color = $beautifyEnable && hexo-config('beautify.title-prefix-icon-color') ? convert(hexo-config('beautify.title-prefix-icon-color')) : $light-red
 
-// // Global Variables
-$font-size = hexo-config('font.global-font-size') ? convert(hexo-config('font.global-font-size')) : 14px
-$code-font-size = hexo-config('font.code-font-size') ? convert(hexo-config('font.code-font-size')) : 0.92em // calc(var(--global-font-size) * 0.92)
+// Global Variables
+$font-size = hexo-config('font.global_font_size') ? convert(hexo-config('font.global_font_size')) : 14px
+$code-font-size = hexo-config('font.code_font_size') ? convert(hexo-config('font.code_font_size')) : 0.92em // calc(var(--global-font-size) * 0.92)
 // $font-color = #1F2D3D
 $text-line-height = 1.5  // original : 2
-// $web-bg = hexo-config('background') && unquote(hexo-config('background'))
 $index_top_img_height = hexo-config('index_top_img_height') ? convert(hexo-config('index_top_img_height')) : 100vh
 $index_site_info_top = hexo-config('index_site_info_top') ? convert(hexo-config('index_site_info_top')) : 43%
 
@@ -125,40 +125,6 @@ $rightside-bottom = hexo-config('rightside_bottom') ? unit(hexo-config('rightsid
 // fireworks
 $fireworks-zIndex = hexo-config('fireworks.zIndex') ? hexo-config('fireworks.zIndex') : 99999
 
-
-$darken-amount = 10
-$shade-amount = 30
-
-darken_and_shade(color, darken_amount, shade_amount)
-    color = darken(color, darken_amount)
-    color = shade(color, shade_amount)
-    return color
-
-
-// Tag Plugins - Button/note
-$color-types = 'blue' 'pink' 'red' 'purple' 'orange' 'green'
-$btn-color = #fff
-$btn-default-color = #777
-$tagsP-blue-color = #428bca
-$tagsP-pink-color = #FF69B4
-$tagsP-red-color = #FF0000
-$tagsP-orange-color = #FF8C00
-$tagsP-purple-color = #6f42c1
-$tagsP-green-color = #5cb85c
-
-
-// [Dark mode] Tag Plugins - Button/note
-if hexo-config('darkmode.enable') || hexo-config('display_mode') == 'dark'
-    $btn-color-dark = darken_and_shade($btn-color, $darken-amount, $shade-amount)
-    $btn-default-color-dark = darken_and_shade($btn-default-color, $darken-amount, $shade-amount)
-    $tagsP-blue-color-dark = darken_and_shade($tagsP-blue-color, $darken-amount, $shade-amount)
-    $tagsP-pink-color-dark = darken_and_shade($tagsP-pink-color, $darken-amount, $shade-amount)
-    $tagsP-red-color-dark = darken_and_shade($tagsP-red-color, $darken-amount, $shade-amount)
-    $tagsP-orange-color-dark = darken_and_shade($tagsP-orange-color, $darken-amount, $shade-amount)
-    $tagsP-purple-color-dark = darken_and_shade($tagsP-purple-color, $darken-amount, $shade-amount)
-    $tagsP-green-color-dark = darken_and_shade($tagsP-green-color, $darken-amount, $shade-amount)
-
-
 // Tag Plugins - Note
 hexo-config('note.light_bg_offset') is a 'unit' ? ($lbg = unit(hexo-config('note.light_bg_offset'), '%')) : ($lbg = 0)
 $note-types = 'default' 'primary' 'info' 'success' 'warning' 'danger'
@@ -172,7 +138,6 @@ $note-modern-default-border = #e1e1e1
 $note-modern-default-bg = lighten(spin($note-modern-default-border, 10), 60% + ($lbg * 4))
 $note-modern-default-text = #666
 $note-modern-default-hover = darken(spin($note-modern-default-text, -10), 32%)
-
 
 // Primary
 $note-primary-icon = '\f055'
@@ -224,65 +189,21 @@ $note-modern-danger-bg = lighten(spin($note-modern-danger-border, 10), 35% + ($l
 $note-modern-danger-text = #a94442
 $note-modern-danger-hover = darken(spin($note-modern-danger-text, -10), 22%)
 
-
-
-// [Dark mode] Tag Plugins - Note
-if hexo-config('darkmode.enable') || hexo-config('display_mode') == 'dark'
-    $note-default-border-dark = darken_and_shade($note-default-border, $darken-amount, $shade-amount)
-    $note-default-bg-dark = darken_and_shade($note-default-bg, $darken-amount, $shade-amount)
-    $note-default-text-dark = darken_and_shade($note-default-text, $darken-amount, $shade-amount)
-    $note-modern-default-border-dark = darken_and_shade($note-modern-default-border, $darken-amount, $shade-amount)
-    $note-modern-default-bg-dark = darken_and_shade($note-modern-default-bg, $darken-amount, $shade-amount)
-    $note-modern-default-text-dark = darken_and_shade($note-modern-default-text, $darken-amount, $shade-amount)
-    $note-modern-default-hover-dark = darken_and_shade($note-modern-default-hover, $darken-amount, $shade-amount)
-
-    $note-primary-border-dark = darken_and_shade($note-primary-border, $darken-amount, $shade-amount)
-    $note-primary-bg-dark = darken_and_shade($note-primary-bg, $darken-amount, $shade-amount)
-    $note-primary-text-dark = darken_and_shade($note-primary-text, $darken-amount, $shade-amount)
-    $note-modern-primary-border-dark = darken_and_shade($note-modern-primary-border, $darken-amount, $shade-amount)
-    $note-modern-primary-bg-dark = darken_and_shade($note-modern-primary-bg, $darken-amount, $shade-amount)
-    $note-modern-primary-text-dark = darken_and_shade($note-modern-primary-text, $darken-amount, $shade-amount)
-    $note-modern-primary-hover-dark = darken_and_shade($note-modern-primary-hover, $darken-amount, $shade-amount)
-
-    $note-info-border-dark = darken_and_shade($note-info-border, $darken-amount, $shade-amount)
-    $note-info-bg-dark = darken_and_shade($note-info-bg, $darken-amount, $shade-amount)
-    $note-info-text-dark = darken_and_shade($note-info-text, $darken-amount, $shade-amount)
-    $note-modern-info-border-dark = darken_and_shade($note-modern-info-border, $darken-amount, $shade-amount)
-    $note-modern-info-bg-dark = darken_and_shade($note-modern-info-bg, $darken-amount, $shade-amount)
-    $note-modern-info-text-dark = darken_and_shade($note-modern-info-text, $darken-amount, $shade-amount)
-    $note-modern-info-hover-dark = darken_and_shade($note-modern-info-hover, $darken-amount, $shade-amount)
-
-    $note-success-border-dark = darken_and_shade($note-success-border, $darken-amount, $shade-amount)
-    $note-success-bg-dark = darken_and_shade($note-success-bg, $darken-amount, $shade-amount)
-    $note-success-text-dark = darken_and_shade($note-success-text, $darken-amount, $shade-amount)
-    $note-modern-success-border-dark = darken_and_shade($note-modern-success-border, $darken-amount, $shade-amount)
-    $note-modern-success-bg-dark = darken_and_shade($note-modern-success-bg, $darken-amount, $shade-amount)
-    $note-modern-success-text-dark = darken_and_shade($note-modern-success-text, $darken-amount, $shade-amount)
-    $note-modern-success-hover-dark = darken_and_shade($note-modern-success-hover, $darken-amount, $shade-amount)
-
-    $note-warning-border-dark = darken_and_shade($note-warning-border, $darken-amount, $shade-amount)
-    $note-warning-bg-dark = darken_and_shade($note-warning-bg, $darken-amount, $shade-amount)
-    $note-warning-text-dark = darken_and_shade($note-warning-text, $darken-amount, $shade-amount)
-    $note-modern-warning-border-dark = darken_and_shade($note-modern-warning-border, $darken-amount, $shade-amount)
-    $note-modern-warning-bg-dark = darken_and_shade($note-modern-warning-bg, $darken-amount, $shade-amount)
-    $note-modern-warning-text-dark = darken_and_shade($note-modern-warning-text, $darken-amount, $shade-amount)
-    $note-modern-warning-hover-dark = darken_and_shade($note-modern-warning-hover, $darken-amount, $shade-amount)
-
-    $note-danger-border-dark = darken_and_shade($note-danger-border, $darken-amount, $shade-amount)
-    $note-danger-bg-dark = darken_and_shade($note-danger-bg, $darken-amount, $shade-amount)
-    $note-danger-text-dark = darken_and_shade($note-danger-text, $darken-amount, $shade-amount)
-    $note-modern-danger-border-dark = darken_and_shade($note-modern-danger-border, $darken-amount, $shade-amount)
-    $note-modern-danger-bg-dark = darken_and_shade($note-modern-danger-bg, $darken-amount, $shade-amount)
-    $note-modern-danger-text-dark = darken_and_shade($note-modern-danger-text, $darken-amount, $shade-amount)
-    $note-modern-danger-hover-dark = darken_and_shade($note-modern-danger-hover, $darken-amount, $shade-amount)
-
-    
-
+// Tag Plugins - Button/note/timeline
+$color-types = 'blue' 'pink' 'red' 'purple' 'orange' 'green'
+$btn-color = #fff
+$btn-default-color = #777
+$tagsP-blue-color = #428bca
+$tagsP-pink-color = #FF69B4
+$tagsP-red-color = #FF0000
+$tagsP-orange-color = #FF8C00
+$tagsP-purple-color = #6f42c1
+$tagsP-green-color = #5cb85c
 
 // // Tag Plugins - Tab
 // $tab-border-color = #f0f0f0
-// $tab-botton-bg = #f0f0f0
-// $tab-botton-color = $font-color
+// $tab-button-bg = #f0f0f0
+// $tab-button-color = $font-color
 // $tab-button-hover-bg = darken($tab-border-color, 8)
 // $tab-active-border-color = $theme-color
 // $tab-button-active-bg = $card-bg
@@ -291,3 +212,53 @@ if hexo-config('darkmode.enable') || hexo-config('display_mode') == 'dark'
 
 // // Tag Plugins - timeline
 // $timeline-default-color = $theme-color
+
+// note - darkmode
+// Default
+$note-dark-default-border = #5a5a5a
+$note-dark-default-bg = #2b2b2b
+$note-dark-default-text = #b3b3b3
+$note-dark-modern-default-border = #9a9a9a
+$note-dark-modern-default-bg = #353535
+$note-dark-modern-default-text = #c4c4c4
+$note-dark-modern-default-hover = #d0d0d0
+// Primary
+$note-dark-primary-border = #5935a1
+$note-dark-primary-bg = #2e1c3e
+$note-dark-primary-text = #a47dd4
+$note-dark-modern-primary-border = #9985cc
+$note-dark-modern-primary-bg = #3c2d4c
+$note-dark-modern-primary-text = #b693e6
+$note-dark-modern-primary-hover = #c9a8f0
+// Info
+$note-dark-info-border = #346fa2
+$note-dark-info-bg = #1f2e3b
+$note-dark-info-text = #7bb3db
+$note-dark-modern-info-border = #7ca8b5
+$note-dark-modern-info-bg = #2b3c44
+$note-dark-modern-info-text = #8fc6e0
+$note-dark-modern-info-hover = #a3d4ea
+// Success
+$note-dark-success-border = #4a944a
+$note-dark-success-bg = #202e20
+$note-dark-success-text = #82c682
+$note-dark-modern-success-border = #8bb087
+$note-dark-modern-success-bg = #2c3d2c
+$note-dark-modern-success-text = #96d196
+$note-dark-modern-success-hover = #a8dca8
+// Warning
+$note-dark-warning-border = #c08a3e
+$note-dark-warning-bg = #3e301f
+$note-dark-warning-text = #e6ba6b
+$note-dark-modern-warning-border = #b8a285
+$note-dark-modern-warning-bg = #4b3c2b
+$note-dark-modern-warning-text = #d4b373
+$note-dark-modern-warning-hover = #e0c080
+// Danger
+$note-dark-danger-border = #b34440
+$note-dark-danger-bg = #3b201f
+$note-dark-danger-text = #e67572
+$note-dark-modern-danger-border = #c7898c
+$note-dark-modern-danger-bg = #4d2b2e
+$note-dark-modern-danger-text = #d98b8e
+$note-dark-modern-danger-hover = #e59fa2

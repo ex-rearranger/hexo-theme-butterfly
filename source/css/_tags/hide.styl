@@ -6,6 +6,8 @@
     padding: 5px 18px
     background: var(--theme-color)
     color: var(--white)
+    addBorderRadius()
+    @extend .btn-effects
 
     &:hover
       background-color: var(--btn-hover-color)
@@ -34,11 +36,12 @@
 
 .toggle
   margin-bottom: 20px
-  // border: 1px solid $tag-hide-toggle-bg
+  border: 1px solid var(--tag-hide-toggle-bg)  // original: $tag-hide-toggle-bg
+  addBorderRadius(5, true)
 
   & > .toggle-button
     padding: 6px 15px
-    background: var(--light-grey)  // original: $tag-hide-toggle-bg
+    background: var(--tag-hide-toggle-bg)  // original: $tag-hide-toggle-bg
     color: #363636  // original: #1F2D3D
     cursor: pointer
 

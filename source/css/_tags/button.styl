@@ -1,4 +1,4 @@
-#article-container
+.container
   .btn-center
     margin: 0 0 20px
     text-align: center
@@ -7,25 +7,19 @@
     display: inline-block
     margin: 0 4px 6px
     padding: 0 15px
+    background-color: var(--btn-beautify-color, var(--btn-default-color))
+    color: var(--btn-color)
+    vertical-align: top
     line-height: 2
-
-    background-color: var(--btn-beautify-color, $btn-default-color)
-    color: $btn-color
-    +darkmode()
-      background-color: var(--btn-beautify-color, $btn-default-color-dark)
-      color: $btn-color-dark
+    addBorderRadius()
+    @extend .btn-effects
 
     for $type in $color-types
       &.{$type}
-        --btn-beautify-color: lookup('$tagsP-' + $type + '-color')
-        +darkmode()
-          --btn-beautify-color: lookup('$tagsP-' + $type + '-color-dark')
+        --btn-beautify-color: unquote('var(--tags-' + $type + '-color)')
 
     &:hover
       background-color: var(--btn-hover-color)
-
-    i + span
-      margin-left: 6px
 
     &:not(.block) + .btn-beautify:not(.block)
       margin: 0 4px 20px
@@ -43,24 +37,26 @@
 
     &.larger
       padding: 6px 15px
-
-    &:hover
-      text-decoration: none
+      @extend .btn-effects-large
 
     &.outline
       border: 1px solid transparent
+      border-color: var(--btn-beautify-color, var(--btn-default-color))
       background-color: transparent
+      color: var(--btn-beautify-color, var(--btn-default-color))
 
-      border-color: var(--btn-beautify-color, $btn-default-color)
-      color: var(--btn-beautify-color, $btn-default-color)
-      +darkmode()
-        border-color: var(--btn-beautify-color, $btn-default-color-dark)
-        color: var(--btn-beautify-color, $btn-default-color-dark)
+      i,
+      span
+        transition: color .3s cubic-bezier(.4, 0, .2, 1)
 
-      &:hover
-        background-color: var(--btn-beautify-color, $btn-default-color)
-        +darkmode()
-          background-color: var(--btn-beautify-color, $btn-default-color-dark)
+      &::before
+        background: linear-gradient(90deg, transparent, rgba(0, 0, 0, .1), transparent)
 
       &:hover
-        color: white !important
+        border-color: var(--btn-hover-color)
+        background-color: var(--btn-hover-color)
+        color: var(--btn-color) !important
+
+        i,
+        span
+          color: var(--btn-color)

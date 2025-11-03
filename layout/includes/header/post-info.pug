@@ -31,7 +31,7 @@
               time(datetime=date_xml(page[date_type]) title=date_title + ' ' + full_date(page[date_type], format=config.full_date_format) language=lang)=date(page[date_type], config.date_format)
       if (postWordcount)
         span.post-meta-separator |
-    
+
     .meta-secondline
       if (postWordcount)
         span.post-meta-wordcount
@@ -51,12 +51,12 @@
               span(lang-type='relative' language=lang)= min2read(page.content, {cn: 350, en: 160, ko: 202}) + _p(langPrefix+'post.min2read_unit')
     
       //- for pv and count
-      mixin pvBlock(parent_id,parent_class,parent_title)
+      mixin pvBlock(parent_id, parent_class, parent_title)
         span.post-meta-separator |
         span(class=parent_class id=parent_id data-flag-title=page.title)
           i.far.fa-eye.post-meta-icon
           each langPrefix, lang in langPrefices
-            span(lang-type='relative' language=lang).post-meta-label=_p(langPrefix+'post.page_pv')
+            span(lang-type='relative' language=lang).post-meta-label= _p(langPrefix+'post.page_pv')
           if block
             block
 

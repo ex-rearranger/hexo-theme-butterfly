@@ -1,4 +1,4 @@
-#article-container
+.container
   figure.gallery-group
     position: relative
     float: left
@@ -6,12 +6,15 @@
     margin: 6px 4px
     width: calc(50% - 8px)
     height: 250px
-    border-radius: 8px
+    border-radius: 10px
     background: var(--dark-black)
-    transform: translate3d(0, 0, 0)
+    -webkit-transform: translate3d(0, 0, 0)
 
     +maxWidth600()
       width: calc(100% - 8px)
+
+    +minWidth1024()
+      width: calc(100% / 3 - 8px)
 
     &:hover
       img
@@ -33,7 +36,7 @@
       height: 250px
       backface-visibility: hidden
       opacity: .8
-      transition: transform .3s // all .3s, filter 375ms ease-in .2s
+      transition: all .3s, filter 375ms ease-in .2s
       transform: translate3d(-10px, 0, 0)
       object-fit: cover
 
@@ -44,7 +47,7 @@
       padding: 30px
       width: 100%
       height: 100%
-      color: var(--white)
+      color: $gallery-color
       text-transform: uppercase
       backface-visibility: hidden
 
@@ -67,25 +70,25 @@
       opacity: 0
       transition: opacity .35s, transform .35s
       transform: translate3d(100%, 0, 0)
-      line-clamp: 4
+      -webkit-line-clamp: 4
 
     .gallery-group-name
       @extend .limit-more-line
       position: relative
       margin: 0
       padding: 8px 0
-      font-weight: 600  // original: bold
+      font-weight: bold
       font-size: 1.65em
       line-height: 1.5
-      line-clamp: 2
+      -webkit-line-clamp: 2
 
-      &::after
+      &:after
         position: absolute
         bottom: 0
         left: 0
         width: 100%
         height: 2px
-        background: var(--white)
+        background: $gallery-color
         content: ''
         transition: transform .35s
         transform: translate3d(-100%, 0, 0)
@@ -95,8 +98,12 @@
     padding: 0 0 16px
 
   .gallery-container
-    margin: 0 0 16px
+    margin: 0 0 20px
     text-align: center
+    opacity: 0
+
+    &.loaded
+      opacity: 1
 
     img
       display: initial
@@ -109,18 +116,23 @@
 
     button
       margin-top: 25px
-      padding: 10px
-      width: 9em
-      border-radius: 5px
+      padding: 8px 14px
       background: var(--btn-bg)
       color: var(--btn-color)
-      font-weight: 600  // original: bold
+      font-weight: bold
       font-size: 1.1em
-      transition: background .2s
+      transition: background .3s
+      addBorderRadius(5)
 
       &:hover
         background: var(--btn-hover-color)
-        transition: background .3s
+
+        i
+          margin-left: 8px
+
+      i
+        margin-left: 4px
+        transition: all .3s
 
   .loading-container
     display: inline-block
@@ -166,7 +178,6 @@
           background: #abbd81
           animation-delay: -1.92s
 
-vendors = 'official'
 @keyframes loading-ball
   0%
     transform: translate(9.24px, 61.6px) scale(0)
@@ -183,7 +194,6 @@ vendors = 'official'
   100%
     transform: translate(113.96px, 61.6px) scale(1)
 
-vendors = 'official'
 @keyframes loading-ball-r
   0%
     transform: translate(113.96px, 61.6px) scale(1)
@@ -191,7 +201,6 @@ vendors = 'official'
   100%
     transform: translate(113.96px, 61.6px) scale(0)
 
-vendors = 'official'
 @keyframes loading-ball-c
   0%
     background: #e15b64

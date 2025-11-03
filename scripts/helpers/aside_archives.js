@@ -5,12 +5,8 @@ const {
 } = require('../custom_helpers/i18n')(hexo);
 
 hexo.extend.helper.register('aside_archives', function (options = {}) {
-  const { config, page, site, url_for_lang, _p } = this
-  const {
-    archive_dir: archiveDir,
-    timezone,
-    language
-  } = config
+  const { config, page, site, url_for, _p } = this
+  const { archive_dir: archiveDir, timezone, language } = config
 
   // Destructure and set default options with object destructuring
   const {
@@ -24,12 +20,12 @@ hexo.extend.helper.register('aside_archives', function (options = {}) {
 
   // Optimize locale handling
   const lang = toMomentLocale(options.lang || page.lang || page.language || language)
-  
+
   // Memoize comparison function to improve performance
-  // yearly에서 에러 발생하는 부분 수정
-  const compareFunc = type === 'monthly'
-    ? (yearA, monthA, yearB, monthB) => yearA === yearB && monthA === monthB
-    : (yearA, monthA, yearB, monthB) => yearA === yearB
+  const compareFunc =
+    type === 'monthly'
+      ? (yearA, monthA, yearB, monthB) => yearA === yearB && monthA === monthB
+      : (yearA, yearB) => yearA === yearB
 
   // Set langPrefix (if it is 'default' page)
   let langPrefix = this.is_default_language(this.page_language()) ? `${lang}.` : ''
@@ -38,11 +34,9 @@ hexo.extend.helper.register('aside_archives', function (options = {}) {
   const posts = site.posts.filter(postFilter(lang)).sort('date', order)
   
   if (!posts.length) return ''
-
-  let result = ''
   
+  // Use reduce for more efficient data processing
   const data = posts.reduce((acc, post) => {
-    // Clone the date object to avoid pollution
     let date = post.date.clone()
     if (timezone) date = date.tz(timezone)
 
@@ -50,23 +44,34 @@ hexo.extend.helper.register('aside_archives', function (options = {}) {
     const month = date.month() + 1
 
     if (lang) date = date.locale(lang)
-    
+
     // Find or create archive entry
     const lastEntry = acc[acc.length - 1]
-    if (!lastEntry || !compareFunc(
-      lastEntry.year,
-      lastEntry.month,
-      year,
-      month
-    )) {
-      acc.push({
-        name: date.format(format),
-        year,
-        month,
-        count: 1
-      })
+
+    if (type === 'yearly') {
+      const existingYearIndex = acc.findIndex(entry => entry.year === year)
+      if (existingYearIndex !== -1) {
+        acc[existingYearIndex].count++
+      } else {
+        // 否則創建新條目
+        acc.push({
+          name: date.format(format),
+          year,
+          month,
+          count: 1
+        })
+      }
     } else {
-      lastEntry.count++
+      if (!lastEntry || !compareFunc(lastEntry.year, lastEntry.month, year, month)) {
+        acc.push({
+          name: date.format(format),
+          year,
+          month,
+          count: 1
+        })
+      } else {
+        lastEntry.count++
+      }
     }
 
     return acc
@@ -81,50 +86,51 @@ hexo.extend.helper.register('aside_archives', function (options = {}) {
     return url_for_lang(lang+'/'+url)
   }
 
-
   // Limit results efficiently
-  const limitedData = limit > 0
-    ? data.slice(0, Math.min(data.length, limit))
-    : data
+  const limitedData = limit > 0 ? data.slice(0, Math.min(data.length, limit)) : data
 
   // Use template literal for better readability
   const archiveHeader = `
     <div class="item-headline">
       <i class="fas fa-archive"></i>
       <span>${_p(langPrefix+'aside.card_archives')}</span>
-      ${((data.length > limitedData.length) || config.theme_config.aside.force_more_button)
-        ? `<a class="card-more-btn" href="${url_for_lang(lang+'/'+archiveDir)}/"
+      ${
+        data.length > limitedData.length
+          ? `<a class="card-more-btn" href="${url_for(archiveDir)}/"
             title="${_p(langPrefix+'aside.more_button')}">
             ${_p(langPrefix+'aside.more_button')}
             <i class="fas fa-angle-right"></i>
           </a>`
-        : ''}
+          : ''
+      }
     </div>
   `
 
   // Use map for generating list items, join for performance
   const archiveList = `
     <ul class="card-archive-list">
-      ${limitedData.map(item => `
+      ${limitedData
+        .map(
+          item => `
         <li class="card-archive-list-item">
           <a class="card-archive-list-link" href="${createArchiveLink(item)}">
             <span class="card-archive-list-date">
               ${transform ? transform(item.name) : item.name}
             </span>
-            ${showCount
-              ? `<span class="card-archive-list-count">${item.count}</span>`
-              : ''}
+            ${showCount ? `<span class="card-archive-list-count">${item.count}</span>` : ''}
           </a>
         </li>
-      `).join('')}
+      `
+        )
+        .join('')}
     </ul>
   `
+
   return archiveHeader + archiveList
 })
 
+// Improved locale conversion function
 const toMomentLocale = function (lang) {
-  if (!lang || lang === undefined || lang === 'default') {
-    return 'default'
-  }
+  if (!lang || lang === undefined || lang === 'default') return 'default'
   return lang.toLowerCase().replace('_', '-')
 }

@@ -1,7 +1,7 @@
 'use strict'
 
 const { truncateContent, postDesc } = require('../common/postDesc')
-const { stripHTML, escapeHTML, prettyUrls } = require('hexo-util')
+const { prettyUrls } = require('hexo-util')
 const crypto = require('crypto')
 const moment = require('moment-timezone')
 
@@ -61,10 +61,10 @@ hexo.extend.helper.register('urlNoIndex', function (url = null, trailingIndex = 
 })
 
 hexo.extend.helper.register('md5', function (path) {
-  return crypto.createHash('md5').update(decodeURI(this.url_for(path))).digest('hex')
+  return crypto.createHash('md5').update(decodeURI(this.url_for(path, { relative: false }))).digest('hex')
 })
 
-hexo.extend.helper.register('injectHtml', function (data) {
+hexo.extend.helper.register('injectHtml', data => {
   return data ? data.join('') : ''
 })
 
@@ -102,12 +102,7 @@ hexo.extend.helper.register('findArchivesTitle', function (page, menu, date) {
   return loop(menu) || defaultTitle
 })
 
-hexo.extend.helper.register('isImgOrUrl', function (path) {
-  const imgTestReg = /\.(png|jpe?g|gif|svg|webp)(\?.*)?$/i
-  return path.indexOf('//') !== -1 || imgTestReg.test(path)
-})
-
-hexo.extend.helper.register('getBgPath', path => {
+hexo.extend.helper.register('getBgPath', function (path) {
   if (!path) return ''
 
   const absoluteUrlPattern = /^(?:[a-z][a-z\d+.-]*:)?\/\//i
@@ -117,7 +112,7 @@ hexo.extend.helper.register('getBgPath', path => {
   if (colorPattern.test(path)) {
     return `background-color: ${path};`
   } else if (absoluteUrlPattern.test(path) || relativeUrlPattern.test(path)) {
-    return `background-image: url(${path});`
+    return `background-image: url(${this.url_for(path)});`
   } else {
     return `background: ${path};`
   }
@@ -153,6 +148,8 @@ hexo.extend.helper.register('shuoshuoFN', (data, page) => {
   finalResult.forEach(item => {
     const utcDate = moment.utc(item.date).format('YYYY-MM-DD HH:mm:ss')
     item.date = moment.tz(utcDate, hexo.config.timezone).format('YYYY-MM-DD HH:mm:ss')
+    // markdown
+    item.content = hexo.render.renderSync({ text: item.content, engine: 'markdown' })
   })
 
   return finalResult
@@ -170,4 +167,18 @@ hexo.extend.helper.register('getPageType', (page, isHome) => {
   }
   if (isHome) return 'home'
   return 'post'
+})
+
+hexo.extend.helper.register('getVersion', () => {
+  const { version } = require('../../package.json')
+  return { hexo: hexo.version, theme: version }
+})
+
+hexo.extend.helper.register('safeJSON', data => {
+  // Safely serialize JSON for embedding in <script> tags
+  return JSON.stringify(data)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029')
 })
