@@ -10,11 +10,14 @@
 const { postDesc } = require('../common/postDesc');
 const { isDefaultLanguage, getPageLanguage } = require('../custom_helpers/i18n')(hexo);
 
-hexo.extend.helper.register('related_posts', function (currentPost, allPosts) {
+hexo.extend.helper.register('related_posts', function (currentPost, allPosts, langPrefices) {
   let relatedPosts = []
   const tagsData = currentPost.tags
   tagsData.length && tagsData.forEach(function (tag) {
     allPosts.forEach(function (post) {
+      if (post.path === currentPost.path) {
+        return
+      }
       if ((currentPost.lang === post.lang || isDefaultLanguage(getPageLanguage(post)) || isDefaultLanguage(getPageLanguage(currentPost)))
         && isTagRelated(tag.name, post.tags)) {
         const getPostDesc = post.postDesc || postDesc(post, hexo)

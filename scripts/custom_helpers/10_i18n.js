@@ -1,5 +1,4 @@
 // hexo-theme-minos/scripts/10_i18n.js からコピペ
-
 const _ = require('lodash');
 const util = require('hexo-util');
 const postGenerator = require('hexo/dist/plugins/generator/post');
@@ -17,7 +16,6 @@ const {
   getUsedLanguages,
   getDisplayLanguages,
   getPageLanguage,
-  isLanguageValid,
   formatRfc5646,
   formatIso639,
   getClosestRfc5646WithCountryCode

@@ -30,12 +30,12 @@
     & > a
       display: block
       margin-bottom: 5px
-      width: w = 2.2em  // original: 35px
+      width: w = 2.2rem  // original: 35px
       height: w
       background-color: var(--btn-bg)
       color: var(--btn-color)
       text-align: center
-      font-size: 1.1em  // original: 16px
+      font-size: 1.1rem  // original: 16px
       line-height: w
       addBorderRadius(5)
       @extend .btn-effects
@@ -45,6 +45,9 @@
       
       i
         vertical-align: baseline
+
+        &.ft-icon-language
+          top: 3px
   
   & .slow-spin
     animation: fa-spin 8s infinite linear;

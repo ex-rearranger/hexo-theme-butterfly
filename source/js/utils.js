@@ -70,7 +70,7 @@
       }
     },
 
-    snackbarShow: (text, showAction = false, duration = 2000) => {
+    snackbarShow: (text, showAction = false, duration = 2500) => {
       const { position, bgLight, bgDark } = GLOBAL_CONFIG.Snackbar
       const bg = document.documentElement.getAttribute('data-theme') === 'light' ? bgLight : bgDark
       Snackbar.show({
@@ -191,12 +191,23 @@
       return actualTop
     },
 
+    getEleLeft: ele => {
+      let actualLeft = ele.offsetLeft
+      let current = ele.offsetParent
+
+      while (current !== null) {
+        actualLeft += current.offsetLeft
+        current = current.offsetParent
+      }
+      
+      return actualLeft
+    },
+
     loadLightbox: ele => {
       const service = GLOBAL_CONFIG.lightbox
 
       if (service === 'medium_zoom') {
         mediumZoom(ele, { background: 'var(--zoom-bg)' })
-        return
       }
 
       if (service === 'fancybox') {

@@ -48,7 +48,7 @@ mixin rightsideItem(array)
 - const showArray = enable && show ? show.split(',') : ['toc','chat','comment']
 - const needCogBtn = (enable && hide) || (!enable && ((globalPageType === 'post' && (readmode || translate.enable || (darkmode.enable && darkmode.button))) || (translate.enable || (darkmode.enable && darkmode.button))))
 
-#rightside
+#rightside(class='rightside-show')
   #rightside-config-hide
     if hideArray.length
       +rightsideItem(hideArray)

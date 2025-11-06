@@ -1,3 +1,6 @@
+.card-widget
+  @extend .cardHover
+
 #aside-content
   width: 26%
 
@@ -12,7 +15,7 @@
     width: 100%
 
   .card-widget
-    @extend .cardHover
+    // @extend .cardHover
     position: relative
     overflow: hidden
     margin-bottom: 1.2em  // original: 20px
@@ -132,10 +135,14 @@
 
       &:hover
         background: var(--theme-color30)
+        border-color: var(--sub-theme-color-light30)
+
+        span:first-child
+          border-color: var(--sub-theme-color-light30)
+        
 
       span
-        padding: 0.23em 0.4em 0.2em
-        margin: auto
+        padding: 0.25em 0.4em 0.2em
 
         &:first-child
           border-right: 1px solid rgba(136, 136, 136, 0.2)
@@ -433,7 +440,7 @@
     .length-num
       margin-top: -0.1em  // original: -.45em
       color: var(--text-highlight-color)
-      font-size: 1.2em
+      font-size: 1.4em
 
 @keyframes more-btn-move
   0%,

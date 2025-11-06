@@ -18,6 +18,6 @@ if theme.menu
             .headline(lang-type='relative' language=lang)= _p(langPrefix+'aside.categories') 
           .length-num= site.categories.length
 
-    hr.custom-hr
-    //- changed to cache false since the content should be different among language settings
-    !=partial('includes/header/menu_item', {}, {cache: false})
+      hr.custom-hr
+      //- changed to cache false since the content should be different among language settings
+      !=partial('includes/header/menu_item', {}, {cache: false})

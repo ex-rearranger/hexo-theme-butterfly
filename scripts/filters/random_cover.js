@@ -4,7 +4,7 @@
 
 'use strict'
 
-hexo.extend.generator.register('post', locals => {
+hexo.extend.filter.register('before_post_render', data => {  // extend post는 중복으로 인한 에러 발생
   const previousIndexes = []
 
   const getRandomCover = defaultCover => {
@@ -62,21 +62,5 @@ hexo.extend.generator.register('post', locals => {
 
     return data
   }
-
-  // https://github.com/hexojs/hexo/blob/master/lib%2Fplugins%2Fgenerator%2Fpost.ts
-  const posts = locals.posts.sort('date').toArray()
-  const { length } = posts
-
-  return posts.map((post, i) => {
-    if (i) post.prev = posts[i - 1]
-    if (i < length - 1) post.next = posts[i + 1]
-
-    post.__post = true
-
-    return {
-      data: handleImg(post),
-      layout: 'post',
-      path: post.path
-    }
-  })
+  return handleImg(data)
 })

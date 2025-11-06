@@ -43,7 +43,7 @@ $indexEnable = hexo-config('cover.index_enable')
     .post-cover
       overflow: hidden
 
-      if ($indexLayout != 5 && ($indexLayout != 7))
+      if ($indexLayout == 4 || ($indexLayout == 6))
         +maxWidth768()
           width: 100%
           height: 230px

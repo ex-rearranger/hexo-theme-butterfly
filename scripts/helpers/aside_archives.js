@@ -83,7 +83,7 @@ hexo.extend.helper.register('aside_archives', function (options = {}) {
     if (type === 'monthly') {
       url += item.month < 10 ? `0${item.month}/` : `${item.month}/`
     }
-    return url_for_lang(lang+'/'+url)
+    return this.url_for_lang(lang+'/'+url)
   }
 
   // Limit results efficiently

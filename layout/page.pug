@@ -1,7 +1,7 @@
 extends includes/layout.pug
 
 block content
-  - const noCardLayout = ['shuoshuo', '404'].includes(page.type) ? 'nc' : ''
+  - const noCardLayout = ['shuoshuo', '404'].includes(page.type) ? 'nc' : 'card-widget'
   - var commentsJsLoad = false
 
   mixin commentLoad
@@ -10,35 +10,35 @@ block content
       //- changed to cache false since the content should be different among language settings
       !=partial('includes/third-party/comments/index', {langPrefices: langPrefices, is_card_widget: true}, {cache: false})
 
-  #page
-    div.card-widget
-      if top_img == false && page.title
-        case page.type
-          when 'tags'
-            h1.page-title
-              i.fas.fa-tags(style='padding-right: 10px;')
-              != page.title
-          when 'categories'
-            h1.page-title
-              i.fas.fa-folder-open(style='padding-right: 10px;')
-              != page.title
-          default
-            h1.page-title= page.title
-
+  #page(class=noCardLayout)
+    //- div.card-widget
+    if top_img == false && page.title
       case page.type
         when 'tags'
-          include includes/page/tags.pug
-        +commentLoad
-        when 'link'
-          include includes/page/flink.pug
-        +commentLoad
+          h1.page-title
+            i.fas.fa-tags(style='padding-right: 10px;')
+            != page.title
         when 'categories'
-          include includes/page/categories.pug
-        +commentLoad
-        when '404'
-          //- changed to cache false since the content should be different among language settings
-          !=partial('includes/page/404', {langPrefices: langPrefices}, {cache: false})
-        when 'shuoshuo'
-          include includes/page/shuoshuo.pug
+          h1.page-title
+            i.fas.fa-folder-open(style='padding-right: 10px;')
+            != page.title
         default
-          include includes/page/default-page.pug
+          h1.page-title= page.title
+
+    case page.type
+      when 'tags'
+        include includes/page/tags.pug
+        +commentLoad
+      when 'link'
+        include includes/page/flink.pug
+        +commentLoad
+      when 'categories'
+        include includes/page/categories.pug
+        +commentLoad
+      when '404'
+        //- changed to cache false since the content should be different among language settings
+        !=partial('includes/page/404', {langPrefices: langPrefices}, {cache: false})
+      when 'shuoshuo'
+        include includes/page/shuoshuo.pug
+      default
+        include includes/page/default-page.pug
